@@ -1,17 +1,37 @@
+<!--
+ * @Author: wanqqq29
+ * @Date: 2022-02-28 11:15:41
+ * @LastEditTime: 2022-02-28 16:24:49
+ * @LastEditors: wanqqq29
+ * @Description: blog.wanqqq29.cn
+ * @FilePath: \web\src\pages\Index.vue
+-->
 <template>
-  <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-vertical.svg"
-      style="width: 200px; height: 200px"
-    >
+  <q-page class="flex flex-center column bg-indigo-10 text-white">
+    <div class="title">
+      <h2 class="text-weight-medium text-center">
+        旅游景点评论分析系统<br />👋Hi~
+      </h2>
+    </div>
+    <submit class="submit"/>
   </q-page>
 </template>
 
+<style lang="scss" scoped>
+.submit{
+  @media (min-width:992px) {
+    width: 35%;
+  }
+  width: 90%;
+}
+</style>
 <script>
-import { defineComponent } from 'vue';
-
+import { defineComponent } from "vue";
+import submit from "components/submit.vue";
 export default defineComponent({
-  name: 'PageIndex'
-})
+  name: "PageIndex",
+  components: {
+    submit,
+  },
+});
 </script>
