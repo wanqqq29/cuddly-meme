@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>在线评论爬虫</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body style="background-color: #2a2933">
+<div><h1 style="color: white;font-size: 80px;margin: 0 auto;margin-top:50px;width:1200px;text-align:center;">在线评论爬虫</h1>
+</div>
+<div style="margin: 0 auto; width: 500px;text-align: center;margin-top: 150px">
+
+    <div style="margin-top: 150px">
+        <div>
+            <form class="navbar-form " role="search">
+                <div class="form-group">
+                    <select class="form-control" name="site">
+                        <option>携程</option>
+                        <option>马蜂窝</option>
+                    </select>
+                    <input type="text" class="form-control" placeholder="产品id" name="productid">
+
+                </div>
+                <button type="submit" class="btn btn-default" formaction="/spyder" onclick=alert("开始爬取，请等待返回结果")>给爷爬！
+                </button>
+            </form>
+        </div>
+
+        <div>
+            <form class="navbar-form" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="租房小组id" name="dbgroup">
+                </div>
+                <button type="submit" class="btn btn-default" formaction="/search/">给爷搜！</button>
+            </form>
+        </div>
+
+
+        <div>
+            <form class="navbar-form" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="关键字" name="dbgroup">
+                </div>
+                <button type="submit" class="btn btn-default" formaction="/search_word/">给爷搜！</button>
+            </form>
+        </div>
+    </div>
+
+
+    <div align="center"><a style="width: 170px" class="btn btn-default " href="javascript:javascript:window.close();">冲完了，再见！</a>
+    </div>
+</div>
+
+</body>
+</html>
