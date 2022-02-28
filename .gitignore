@@ -1,0 +1,9 @@
+.idea
+Include
+Lib
+Scripts
+venv
+v
+/main/review_spyder/sentiments/model/
+/main/review_spyder/sentiments/csv/
+
