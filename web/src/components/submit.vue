@@ -1,7 +1,7 @@
 <!--
  * @Author: wanqqq29
  * @Date: 2022-02-28 15:41:20
- * @LastEditTime: 2022-02-28 16:42:13
+ * @LastEditTime: 2022-03-01 11:04:52
  * @LastEditors: wanqqq29
  * @Description: blog.wanqqq29.cn
  * @FilePath: \web\src\components\submit.vue
@@ -42,24 +42,31 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import { api } from "boot/axios";
+import { useRouter } from "vue-router";
 export default defineComponent({
   name: "submit",
-  setup() {
+  setup(props, ctx) {
     const type = ref("");
     const type_options = ["携程", "马蜂窝"];
     const pid = ref("");
+    let router = useRouter();
 
-    //请求爬虫
-    const getinfo = () => {
-        let post_data={"type":type.value,"pid":pid.value}
-      api.post("/getinfo");
+    const spyder_go = () => {
+      router.push({
+        name: "result",
+        params: {
+          type: type.value,
+          pid:pid.value,
+          check_flag:true,
+        },
+      });
     };
 
     return {
       type,
       type_options,
       pid,
+      spyder_go,
     };
   },
 });

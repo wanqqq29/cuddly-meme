@@ -1,7 +1,7 @@
 <!--
  * @Author: wanqqq29
  * @Date: 2022-02-28 11:15:41
- * @LastEditTime: 2022-02-28 16:24:49
+ * @LastEditTime: 2022-03-01 09:07:36
  * @LastEditors: wanqqq29
  * @Description: blog.wanqqq29.cn
  * @FilePath: \web\src\pages\Index.vue
@@ -18,9 +18,12 @@
 </template>
 
 <style lang="scss" scoped>
+.title{
+  margin-top: -15%;
+}
 .submit{
   @media (min-width:992px) {
-    width: 35%;
+    width: 30%;
   }
   width: 90%;
 }
