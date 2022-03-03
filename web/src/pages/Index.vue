@@ -1,7 +1,7 @@
 <!--
  * @Author: wanqqq29
  * @Date: 2022-02-28 11:15:41
- * @LastEditTime: 2022-03-01 17:05:53
+ * @LastEditTime: 2022-03-03 16:03:09
  * @LastEditors: wanqqq29
  * @Description: blog.wanqqq29.cn
  * @FilePath: \web\src\pages\Index.vue
@@ -45,14 +45,14 @@
 }
 </style>
 <script>
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref } from "vue";
 import submit from "components/submit.vue";
 export default defineComponent({
   name: "PageIndex",
   components: {
     submit,
   },
-  setup(props, context) {
+  setup() {
     const e_flag = ref(false);
     const get_e_flag = (e) => {
       e_flag.value = e;
