@@ -1,7 +1,7 @@
 <!--
  * @Author: wanqqq29
  * @Date: 2022-02-28 15:41:20
- * @LastEditTime: 2022-03-01 11:04:52
+ * @LastEditTime: 2022-03-01 15:04:04
  * @LastEditors: wanqqq29
  * @Description: blog.wanqqq29.cn
  * @FilePath: \web\src\components\submit.vue
@@ -49,23 +49,32 @@ export default defineComponent({
     const type = ref("");
     const type_options = ["携程", "马蜂窝"];
     const pid = ref("");
+    const e_flag = ref(false)
+    
     let router = useRouter();
 
     const spyder_go = () => {
-      router.push({
-        name: "result",
-        params: {
-          type: type.value,
-          pid:pid.value,
-          check_flag:true,
-        },
-      });
+      if ((type.value == "") | (pid.value == "")) {
+        e_flag.value=true
+        ctx.emit('e_flag',e_flag.value)
+        console.log(e_flag.value);
+      } else {
+        router.push({
+          name: "result",
+          params: {
+            type: type.value,
+            pid: pid.value,
+            check_flag: true,
+          },
+        });
+      }
     };
 
     return {
       type,
       type_options,
       pid,
+      e_flag,
       spyder_go,
     };
   },
