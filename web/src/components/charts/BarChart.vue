@@ -1,7 +1,7 @@
 <!--
  * @Author: wanqqq29
  * @Date: 2022-03-03 13:47:46
- * @LastEditTime: 2022-03-03 14:55:26
+ * @LastEditTime: 2022-03-03 15:53:12
  * @LastEditors: wanqqq29
  * @Description: blog.wanqqq29.cn
  * @FilePath: \web\src\components\charts\barChart.vue
@@ -41,6 +41,7 @@ export default {
       type: "",
       x: "",
       y: "",
+      total: "",
     });
     const barDom = ref(null);
     const draw = () => {
@@ -132,6 +133,21 @@ export default {
             barWidth: "45%",
             data: bar_data.y.bad,
           },
+          {
+            name: "总数",
+            type: "line",
+            symbol: "circle",
+            itemStyle: {
+              normal: {
+                color: "#E07BCE",
+                label: {
+                  show: true,
+                  position: "top",
+                },
+              },
+            },
+            data: bar_data.total,
+          },
         ],
       });
     };
@@ -141,6 +157,8 @@ export default {
       bar_data.type = response.type;
       bar_data.x = response.x;
       bar_data.y = response.y;
+      bar_data.total = response.y.good.map((v, i) => v + response.y.bad[i]);
+      console.log(bar_data.y);
       draw();
     });
 

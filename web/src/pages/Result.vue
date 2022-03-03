@@ -1,7 +1,7 @@
 <!--
  * @Author: wanqqq29
  * @Date: 2022-03-01 09:13:54
- * @LastEditTime: 2022-03-03 14:58:59
+ * @LastEditTime: 2022-03-03 15:44:22
  * @LastEditors: wanqqq29
  * @Description: blog.wanqqq29.cn
  * @FilePath: \web\src\pages\result.vue
@@ -76,9 +76,9 @@ export default defineComponent({
         pie: "", //好评率
         wordCloud: [], //词云
         bar: {
-          y:{},
-          x:[],
-          type:[],
+          y: {},
+          x: [],
+          type: [],
         }, //柱状图
       },
     });
