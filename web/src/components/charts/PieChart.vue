@@ -1,7 +1,7 @@
 <!--
  * @Author: wanqqq29
  * @Date: 2022-03-02 11:00:56
- * @LastEditTime: 2022-03-03 12:52:39
+ * @LastEditTime: 2022-03-03 14:51:51
  * @LastEditors: wanqqq29
  * @Description: blog.wanqqq29.cn
  * @FilePath: \web\src\components\charts\PieChart.vue

@@ -1,7 +1,7 @@
 <!--
  * @Author: wanqqq29
  * @Date: 2022-03-03 10:36:35
- * @LastEditTime: 2022-03-03 13:03:31
+ * @LastEditTime: 2022-03-03 15:04:37
  * @LastEditors: wanqqq29
  * @Description: blog.wanqqq29.cn
  * @FilePath: \web\src\components\charts\wordChart.vue
@@ -31,11 +31,10 @@ export default {
       window.onresize = () => {
         wordChart.resize();
       };
-      wordChart.clear();
       wordChart.setOption(
         {
           tooltip: {
-            show: false,
+            show: true,
           },
           backgroundColor: "#00023f",
           grid: {
@@ -65,18 +64,25 @@ export default {
               top: "center",
               drawOutOfBound: false,
               textStyle: {
-                normal: {
-                  color: function () {
-                    return (
-                      "rgb(" +
-                      [
-                        Math.round(Math.random() * 160),
-                        Math.round(Math.random() * 160),
-                        Math.round(Math.random() * 160),
-                      ].join(",") +
-                      ")"
-                    );
-                  },
+                color: function () {
+                  // Random color
+                  return (
+                    "rgb(" +
+                    [
+                      Math.round((Math.random() + 0.2) * 160),
+                      Math.round((Math.random() + 0.4) * 160),
+                      Math.round((Math.random() + 0.5) * 160),
+                    ].join(",") +
+                    ")"
+                  );
+                },
+              },
+
+              emphasis: {  //鼠标选中后高亮
+                focus: "self",
+                textStyle: {
+                  textShadowBlur: 10,
+                  textShadowColor: "#333",
                 },
               },
               data: word_data.value,
@@ -90,9 +96,9 @@ export default {
     watchEffect(async () => {
       const response = await props.wordData;
       word_data.value = await response;
-      setTimeout(()=>{
-        draw()
-      },500)
+      setTimeout(() => {
+        draw();
+      }, 500);
     });
 
     onMounted(() => {});

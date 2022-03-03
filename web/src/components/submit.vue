@@ -1,7 +1,7 @@
 <!--
  * @Author: wanqqq29
  * @Date: 2022-02-28 15:41:20
- * @LastEditTime: 2022-03-01 15:04:04
+ * @LastEditTime: 2022-03-03 14:42:38
  * @LastEditors: wanqqq29
  * @Description: blog.wanqqq29.cn
  * @FilePath: \web\src\components\submit.vue
@@ -57,7 +57,6 @@ export default defineComponent({
       if ((type.value == "") | (pid.value == "")) {
         e_flag.value=true
         ctx.emit('e_flag',e_flag.value)
-        console.log(e_flag.value);
       } else {
         router.push({
           name: "result",
