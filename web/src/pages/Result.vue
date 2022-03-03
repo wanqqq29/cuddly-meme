@@ -1,7 +1,7 @@
 <!--
  * @Author: wanqqq29
  * @Date: 2022-03-01 09:13:54
- * @LastEditTime: 2022-03-03 10:26:28
+ * @LastEditTime: 2022-03-03 12:56:36
  * @LastEditors: wanqqq29
  * @Description: blog.wanqqq29.cn
  * @FilePath: \web\src\pages\result.vue
@@ -16,16 +16,18 @@
   </div>
 
   <pie-chart :pieData="charts_data.charts.pie" />
+  <word-chart :wordData="charts_data.charts.wordCloud" />
   <router-link to="/">back</router-link>
 </template>
 <script>
 import { defineComponent, onMounted, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
+import WordChart from "../components/charts/wordChart.vue";
 import PieChart from "../components/charts/PieChart.vue";
 
 export default defineComponent({
-  components: { PieChart },
+  components: { PieChart, WordChart },
 
   setup(props, ctx) {
     //router是全局路由对象，route= useRoute()是当前路由对
@@ -80,10 +82,8 @@ export default defineComponent({
         .then((res) => {
           charts_data.charts.pie = res.data.charts.pie;
           charts_data.charts.wordCloud = res.data.charts.wordCloud;
+          console.log(charts_data.charts.wordCloud);
         })
-        .catch((error) => {
-          console.log(error);
-        });
     };
 
     onMounted(() => {

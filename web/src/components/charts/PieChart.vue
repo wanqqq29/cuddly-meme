@@ -1,14 +1,14 @@
 <!--
  * @Author: wanqqq29
  * @Date: 2022-03-02 11:00:56
- * @LastEditTime: 2022-03-03 10:26:08
+ * @LastEditTime: 2022-03-03 12:52:39
  * @LastEditors: wanqqq29
  * @Description: blog.wanqqq29.cn
  * @FilePath: \web\src\components\charts\PieChart.vue
 -->
 <template>
   {{ pie_data }}
-  <div id="pie" ref="chartDom" style="height: 300px"></div>
+  <div id="pie" ref="pieDom" style="height: 300px"></div>
 </template>
 <script>
 import * as echarts from "echarts/core";
@@ -40,13 +40,13 @@ export default {
   name: "pie",
   setup(props, ctx) {
     const pie_data = ref("");
-    const chartDom = ref(null);
+    const pieDom = ref(null);
     const draw = () => {
-      const myChart = echarts.init(chartDom.value);
-      window.onresize = function () {
-        myChart.resize();
+      const pieChart = echarts.init(pieDom.value);
+      window.onresize = () => {
+        pieChart.resize();
       };
-      myChart.setOption(
+      pieChart.setOption(
         {
           title: [
             {
@@ -106,18 +106,16 @@ export default {
               data: [pie_data.value],
               coordinateSystem: "polar",
               itemStyle: {
-                normal: {
-                  color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
-                    {
-                      offset: 0,
-                      color: "#16CEB9",
-                    },
-                    {
-                      offset: 1,
-                      color: "#6648FF",
-                    },
-                  ]),
-                },
+                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                  {
+                    offset: 0,
+                    color: "#16CEB9",
+                  },
+                  {
+                    offset: 1,
+                    color: "#6648FF",
+                  },
+                ]),
               },
             },
             {
@@ -125,7 +123,6 @@ export default {
               type: "pie",
               startAngle: 80,
               radius: ["56%"],
-              hoverAnimation: false,
               center: ["50%", "50%"],
               itemStyle: {
                 color: "rgba(66, 66, 66, .1)",
@@ -139,7 +136,6 @@ export default {
               type: "pie",
               startAngle: 80,
               radius: ["38%"],
-              hoverAnimation: false,
               center: ["50%", "50%"],
               itemStyle: {
                 color: "rgba(66, 66, 66, .1)",
@@ -160,9 +156,8 @@ export default {
       draw();
     });
 
-
     return {
-      chartDom,
+      pieDom,
       pie_data,
     };
   },

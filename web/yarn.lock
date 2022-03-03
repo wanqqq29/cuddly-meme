@@ -2585,6 +2585,11 @@ duplexer@^0.1.2:
   resolved "https://registry.npmmirror.com/duplexer/-/duplexer-0.1.2.tgz#3abe43aef3835f8ae077d136ddce0f276b0400e6"
   integrity sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==
 
+echarts-wordcloud@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmmirror.com/echarts-wordcloud/-/echarts-wordcloud-2.0.0.tgz#52ef817895801ffe9e99dd1bacab7686b2dec04a"
+  integrity sha512-K7l6pTklqdW7ZWzT/1CS0KhBSINr/cd7c5N1fVMzZMwLQHEwT7x+nivK7g5hkVh7WNcAv4Dn6/ZS5zMKRozC1g==
+
 echarts@^5.3.0:
   version "5.3.0"
   resolved "https://registry.npmmirror.com/echarts/-/echarts-5.3.0.tgz#39342fcf0f763413fecd9d2afd1c415163de694d"
