@@ -1,7 +1,7 @@
 <!--
  * @Author: wanqqq29
  * @Date: 2022-03-01 09:13:54
- * @LastEditTime: 2022-03-03 15:44:22
+ * @LastEditTime: 2022-03-03 16:14:57
  * @LastEditors: wanqqq29
  * @Description: blog.wanqqq29.cn
  * @FilePath: \web\src\pages\result.vue
@@ -105,7 +105,7 @@ export default defineComponent({
             "11月",
             "12月",
           ],
-          type: ["好评", "差评"],
+          type: ["好评", "差评","总数"],
         };
       });
     };

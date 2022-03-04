@@ -1,7 +1,7 @@
 <!--
  * @Author: wanqqq29
  * @Date: 2022-03-03 13:47:46
- * @LastEditTime: 2022-03-03 16:02:23
+ * @LastEditTime: 2022-03-03 16:11:06
  * @LastEditors: wanqqq29
  * @Description: blog.wanqqq29.cn
  * @FilePath: \web\src\components\charts\barChart.vue
@@ -118,6 +118,31 @@ export default {
             },
           },
         },
+        dataZoom: [
+          {
+            show: true,
+            height: 30,
+            bottom: 10,
+            start: 10,
+            end: 80,
+            handleIcon:
+              "path://M306.1,413c0,2.2-1.8,4-4,4h-59.8c-2.2,0-4-1.8-4-4V200.8c0-2.2,1.8-4,4-4h59.8c2.2,0,4,1.8,4,4V413z",
+            handleSize: "110%",
+            handleStyle: {
+              color: "#d3dee5",
+            },
+            textStyle: {
+              color: "#fff",
+            },
+          },
+          {
+            type: "inside",
+            show: true,
+            height: 15,
+            start: 111,
+            end: 35,
+          },
+        ],
         series: [
           {
             name: "好评",
@@ -160,7 +185,6 @@ export default {
       bar_data.total = response.y.good.map((v, i) => v + response.y.bad[i]);
       draw();
     });
-
 
     return {
       barDom,
