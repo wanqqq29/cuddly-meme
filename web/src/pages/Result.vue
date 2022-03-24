@@ -1,7 +1,7 @@
 <!--
  * @Author: wanqqq29
  * @Date: 2022-03-01 09:13:54
- * @LastEditTime: 2022-03-03 16:14:57
+ * @LastEditTime: 2022-03-04 15:45:14
  * @LastEditors: wanqqq29
  * @Description: blog.wanqqq29.cn
  * @FilePath: \web\src\pages\result.vue
@@ -32,6 +32,7 @@ export default defineComponent({
   components: { PieChart, WordChart, BarChart },
 
   setup(props, ctx) {
+    
     //router是全局路由对象，route= useRoute()是当前路由对
     let router = useRouter();
     let route = useRoute();
@@ -105,7 +106,7 @@ export default defineComponent({
             "11月",
             "12月",
           ],
-          type: ["好评", "差评","总数"],
+          type: ["好评", "差评", "总数"],
         };
       });
     };
