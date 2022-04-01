@@ -35,7 +35,12 @@ def xc_info_spyder(id):
     ppeoplenum = \
         html_tree.xpath("//*[@id='base_bd']/div[1]/div/div[2]/div[1]/div[1]/div[1]/div/div[2]/div/span/text()")[0]
     poffer = html_tree.xpath("//*[@id='grp-0-hint-supplier']/div/a/span/text()")
-    return {'pname': pname, 'pdesc': pdesc, 'ppeoplenum': ppeoplenum, 'poffer': poffer}
+    pfeatures = html_tree.xpath(
+        "/html/body[@class='bg_white_color']/div[@id='root']/div[@class='imvc-view-item']/div[@id='base_bd']/div[@class='header_wrap']/div[@class='header_inner']/div[@class='detail_header']/div[@class='detail_summary']/div[@class='pro_det_inf']/dl[1]/dd[@class='pro_det_tags']/span[@class='tag_com']/text()")
+    poffer = html_tree.xpath("//div[@class='pro_det_inf']/dl[3]/dd/div/a/text()")
+    pmd = html_tree.xpath("//div[@class='pro_det_inf']/dl[4]/dd/ul/li/text()")
+    return {'pname': pname, 'pdesc': pdesc, 'ppeoplenum': ppeoplenum, 'poffer': poffer, 'pfeatures': pfeatures,
+            'pmd': pmd}
 
 
 # requestspost获取数据 返回j
