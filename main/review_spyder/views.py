@@ -1,9 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
+from django.middleware.csrf import get_token
+
 # Create your views here.
 import json
 import review_spyder.spyder.xc_utils as xc
 from review_spyder.models import Original_Comments, Original_Product, picture
+
+# 获取Csrf_token
+def foo(request):
+    if request.method == 'GET':
+        csrf_token = get_token(request)
+        return HttpResponse(csrf_token, content_type="application/json,charset=utf-8")
 
 
 def get_index_page(request):
@@ -27,7 +35,7 @@ def getreview(request):
         postdata = json.loads(request.body)
         site = postdata.get('type')  # 网站类型：携程|马蜂窝
         pid = postdata.get('pid')  # 产品id
-        if site == '携程':
+        if site == 'ctrip':
             if len(pid) != 0:
                 totalnum = xc.xc_spyder(pid)
                 reviewlist = Original_Comments.objects.all().filter(productID=pid)
@@ -36,15 +44,30 @@ def getreview(request):
     else:
         return HttpResponse('method is NotAllowd! x_x!')
 
-
+#获取信息
 def getinfo(request):
     if request.method == 'POST':
         postdata = json.loads(request.body)
-        site = postdata.get('type')
-        pid = postdata.get('pid')
-        if site == '携程':
+        site = postdata['type']
+        pid = postdata['pid']
+        if site == 'ctrip':
             if len(pid) != 0:
                 res = xc.xc_info_spyder(pid)
+                print(res)
                 return JsonResponse(res)
+            else:
+                return HttpResponse('method is NotAllowd! x_x!')
     else:
         return HttpResponse('method is NotAllowd! x_x!')
+
+# 单条分析接口（不重要）
+def api1(request):
+    if request.method == 'POST':
+        postdata = json.loads(request.body)
+        return JsonResponse(request.body)
+
+# 返回echarts数据
+def api2(request):
+    if request.method == 'POST':
+        postdata = json.loads(request.body)
+        return JsonResponse(request.body)
