@@ -29,4 +29,4 @@ class Original_Product(models.Model):
 
 class picture(models.Model):
     productID = models.ForeignKey('Original_Product', verbose_name=u'产品ID', on_delete=models.CASCADE)
-    imgLink = models.CharField(max_length=300, verbose_name=u'图片链接')
+    imgLink = models.CharField(max_length=300, verbose_name=u'图片链接', unique=True)

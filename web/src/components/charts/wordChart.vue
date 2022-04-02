@@ -7,8 +7,7 @@
  * @FilePath: \web\src\components\charts\wordChart.vue
 -->
 <template>
-  {{ word_data }}
-  <div id="word" ref="wordDom" style="height: 300px"></div>
+  <div id="word" ref="wordDom" style="height: 250px"></div>
 </template>
 
 <script>
@@ -36,7 +35,6 @@ export default {
           tooltip: {
             show: true,
           },
-          backgroundColor: "#00023f",
           grid: {
             left: 0,
             bottom: 0,

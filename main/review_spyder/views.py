@@ -7,6 +7,7 @@ import json
 import review_spyder.spyder.xc_utils as xc
 from review_spyder.models import Original_Comments, Original_Product, picture
 
+
 # 获取Csrf_token
 def foo(request):
     if request.method == 'GET':
@@ -35,16 +36,22 @@ def getreview(request):
         postdata = json.loads(request.body)
         site = postdata.get('type')  # 网站类型：携程|马蜂窝
         pid = postdata.get('pid')  # 产品id
+        page = postdata.get('page')
         if site == 'ctrip':
             if len(pid) != 0:
-                totalnum = xc.xc_spyder(pid)
-                reviewlist = Original_Comments.objects.all().filter(productID=pid)
-                piclist = picture.objects.all().filter(productID=pid)
-                return JsonResponse({'totalnum': totalnum, 'reviewlist': reviewlist, 'piclist': piclist})
+                # totalnum = xc.xc_spyder(pid)
+                reviewlist = []
+                for i in Original_Comments.objects.all().filter(productID=pid).values():
+                    reviewlist.append(i['comment_content'])
+                piclist = []
+                for i in picture.objects.all().filter(productID=pid).values():
+                    piclist.append(i['imgLink'])
+                return JsonResponse({'totalnum': 11, 'reviewlist': reviewlist, 'piclist': piclist})
     else:
         return HttpResponse('method is NotAllowd! x_x!')
 
-#获取信息
+
+# 获取信息
 def getinfo(request):
     if request.method == 'POST':
         postdata = json.loads(request.body)
@@ -60,11 +67,13 @@ def getinfo(request):
     else:
         return HttpResponse('method is NotAllowd! x_x!')
 
+
 # 单条分析接口（不重要）
 def api1(request):
     if request.method == 'POST':
         postdata = json.loads(request.body)
         return JsonResponse(request.body)
+
 
 # 返回echarts数据
 def api2(request):
