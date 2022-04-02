@@ -9,6 +9,8 @@ import axios from 'axios'
 // "export default () => {}" function below (which runs individually
 // for each client)
 const api = axios.create({ baseURL: 'http://127.0.0.1:8000' })
+// const api = axios.create({ baseURL: 'http://127.0.0.1:4523/mock/666510' })
+
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api

@@ -20,7 +20,7 @@
     </div>
     <div class="inputBar item col-sm-12 col-md-12 col-lg-5 flex flex-center">
       <q-input outlined v-model="pid" input-class="text-right text-white" placeholder="输入产品id">
-        
+
       </q-input>
     </div>
     <div class="submitBtn item col-sm-12 col-md-12 col-lg-2 flex flex-center">
@@ -33,7 +33,7 @@
   .optionBar {
     margin-bottom: 10px;
   }
-  
+
   .item {
     @media (max-width: 800px) {
     margin-bottom: 10px;
@@ -43,7 +43,7 @@
   }
     margin-bottom: 10px;
     height: 40px;
-    
+
     :first-child {
       width: 100%;
       height: 100%;
@@ -75,12 +75,12 @@ export default defineComponent({
     let router = useRouter();
 
     const spyder_go = () => {
-      if ((type.value == "") | (pid.value == "")) {
+      if ((type.value === "") || (pid.value === "")) {
         e_flag.value = true;
         ctx.emit("e_flag", e_flag.value);
       } else {
         router.push({
-          name: "result",
+          name: "end",
           params: {
             type: type.value,
             pid: pid.value,

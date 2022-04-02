@@ -7,9 +7,7 @@
  * @FilePath: \web\src\components\charts\barChart.vue
 -->
 <template>
-  11111111
-  {{ bar_data }}
-  <div id="bar" ref="barDom" style="height: 300px"></div>
+  <div id="bar" ref="barDom" style="height: 250px"></div>
 </template>
 
 <script>

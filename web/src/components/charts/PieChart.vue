@@ -7,8 +7,7 @@
  * @FilePath: \web\src\components\charts\PieChart.vue
 -->
 <template>
-  {{ pie_data }}
-  <div id="pie" ref="pieDom" style="height: 300px"></div>
+  <div id="pie" ref="pieDom" style="height: 250px"></div>
 </template>
 <script>
 import * as echarts from "echarts/core";
@@ -71,7 +70,6 @@ export default {
               },
             },
           ],
-          backgroundColor: "#111",
           polar: {
             radius: ["42%", "52%"],
             center: ["50%", "50%"],
