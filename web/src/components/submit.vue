@@ -15,7 +15,7 @@
         inline
         dense
         keep-color
-        color="info"
+        color="warning"
       />
     </div>
     <div class="inputBar item col-sm-12 col-md-12 col-lg-5 flex flex-center">

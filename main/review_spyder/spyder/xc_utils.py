@@ -1,8 +1,9 @@
+import datetime
 import json, re, requests
 import review_spyder.utils.TimeFormat as tf
 from review_spyder.models import Original_Comments, Original_Product, picture
 from lxml import etree
-
+from review_spyder.sentiments.Bayes.bayes_train import 单条API
 
 # TODO:
 #   携程爬虫
@@ -10,11 +11,25 @@ from lxml import etree
 #   每次获取50条，基本两三次就能全部获取到，所以不需要代理
 
 # 携程爬虫
+# 增加时间判断，如果上次爬取日期不超过30天则无需爬取
 def xc_spyder(id):
-    res = xc_getdata(id)
-    review_list = res['review_list']
-    img_list = res['img_list']
-    return res['previewnum']
+    try:
+        t = Original_Product.objects.all().filter(productID=id).values()
+        if (datetime.datetime.now() - datetime.timedelta(days=30)) > t[0]['spyder_date']:
+            res = xc_getdata(id)
+            review_list = res['review_list']
+            img_list = res['img_list']
+            print('内容过期，爬取完毕')
+            return res['previewnum']
+        else:
+            print("无需爬取")
+            return '无需爬取'
+    except:
+        res = xc_getdata(id)
+        review_list = res['review_list']
+        img_list = res['img_list']
+        print('内容不存在，爬取完毕')
+        return res['previewnum']
 
 ##携程旅游信息爬虫
 def xc_info_spyder(id):
@@ -94,11 +109,12 @@ def xc_getfistinfo(data, reviewlist, imglist, ptid):
         reviewlist.append(comment_content)
         # 声明Original_Comments模型实例
         OC = Original_Comments()
-        OC.comment_content = comment_content  ## 想数据库中添加评论数据
+        OC.comment_content = comment_content  ## 向数据库中添加评论数据
         OC.commentID = i['commentId']  # 评论id
         OC.trip_time = tf.formatTime(i['commentTime'])  # 评论时间
         OC.comment_score = i['score']  # 用户评分
         OC.productID = ptid  # 产品id
+        OC.tokScore = 单条API(comment_content)
         try:
             OC.save()
         except:
@@ -110,6 +126,7 @@ def xc_getfistinfo(data, reviewlist, imglist, ptid):
                 pc = picture()
                 pc.productID = ptid  # 产品id
                 pc.imgLink = ii['url']  # 产品链接
+                pc.hash = ii['url'][35:56] #图片hash 去重
                 try:
                     pc.save()
                 except:
@@ -136,6 +153,7 @@ def xc_getotherinfo(id, pagenum, reviewlist, imglist, ptid):
             OC.trip_time = tf.formatTime(i['commentTime'])  # 评论时间
             OC.comment_score = i['score']  # 用户评分
             OC.productID = ptid  # 产品id
+            OC.tokScore = 单条API(comment_content)
             try:
                 OC.save()
             except:
@@ -147,6 +165,7 @@ def xc_getotherinfo(id, pagenum, reviewlist, imglist, ptid):
                     pc = picture()
                     pc.productID = ptid  # 产品id
                     pc.imgLink = ii['url']  # 产品链接
+                    pc.hash = ii['url'][-11:-1]  # 图片hash 去重
                     try:
                         pc.save()
                     except:

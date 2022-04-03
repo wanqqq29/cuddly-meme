@@ -8,5 +8,6 @@ urlpatterns = [
     path('getInfo/', views.getinfo),
     path('getReview/', views.getreview),
     path('sentiments1/', views.api1),
-    path('sentiments2/', views.api2)
+    path('getWordCloud/', views.WordCloud),
+    path('test/', views.test)
 ]

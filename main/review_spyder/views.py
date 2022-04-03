@@ -3,9 +3,14 @@ from django.http import HttpResponse, JsonResponse
 from django.middleware.csrf import get_token
 
 # Create your views here.
-import json
+import json, datetime, collections
 import review_spyder.spyder.xc_utils as xc
 from review_spyder.models import Original_Comments, Original_Product, picture
+from review_spyder.sentiments.Bayes.bayes_train import 单条API, load_corpus, pos_stl
+
+
+def test(request):
+    return HttpResponse('1')
 
 
 # 获取Csrf_token
@@ -36,17 +41,28 @@ def getreview(request):
         postdata = json.loads(request.body)
         site = postdata.get('type')  # 网站类型：携程|马蜂窝
         pid = postdata.get('pid')  # 产品id
-        page = postdata.get('page')
         if site == 'ctrip':
             if len(pid) != 0:
                 # totalnum = xc.xc_spyder(pid)
+                data = Original_Comments.objects.all().filter(productID=pid).values()
                 reviewlist = []
-                for i in Original_Comments.objects.all().filter(productID=pid).values():
+                tokScorelist = []
+                good = 0
+                for i in data:
                     reviewlist.append(i['comment_content'])
+                    tokScorelist.append(i['tokScore'])
+                    if i['tokScore'] == '0':
+                        good += 1
+                goodrate = str((good / len(tokScorelist)) * 100)[0:4]
+                print(goodrate)
+                reviewdata = []
+                for i in range(0, len(reviewlist)):
+                    reviewdata.append({'item': reviewlist[i], 'score': tokScorelist[i]})
                 piclist = []
                 for i in picture.objects.all().filter(productID=pid).values():
                     piclist.append(i['imgLink'])
-                return JsonResponse({'totalnum': 11, 'reviewlist': reviewlist, 'piclist': piclist})
+                return JsonResponse(
+                    {'totalnum': 11, 'reviewlist': reviewdata, 'piclist': piclist, 'goodrate': goodrate})
     else:
         return HttpResponse('method is NotAllowd! x_x!')
 
@@ -60,7 +76,6 @@ def getinfo(request):
         if site == 'ctrip':
             if len(pid) != 0:
                 res = xc.xc_info_spyder(pid)
-                print(res)
                 return JsonResponse(res)
             else:
                 return HttpResponse('method is NotAllowd! x_x!')
@@ -75,8 +90,35 @@ def api1(request):
         return JsonResponse(request.body)
 
 
-# 返回echarts数据
-def api2(request):
+# 返回WordCloud数据
+def WordCloud(request):
     if request.method == 'POST':
         postdata = json.loads(request.body)
-        return JsonResponse(request.body)
+        site = postdata.get('type')  # 网站类型：携程|马蜂窝
+        pid = postdata.get('pid')  # 产品id
+        if site == 'ctrip':
+            if len(pid) != 0:
+                # totalnum = xc.xc_spyder(pid)
+                reviewlist = []
+                for i in Original_Comments.objects.all().filter(productID=pid).values():
+                    reviewlist.append(i['comment_content'])
+                wordCloud = []
+                for j in load_corpus(reviewlist):
+                    j = j.split()
+                    for x in j:
+                        if len(x) > 1:
+                            wordCloud.append(x)
+                wordCloud = pos_stl(wordCloud)
+                # 词频统计
+                word_counts = collections.Counter(wordCloud)  # 对分词做词频统计
+                word_counts = dict(word_counts)
+                word_list = []
+                for i in word_counts:
+                    word_list.append({'name': i, 'value': word_counts[i]})
+                return JsonResponse({'score': 80, 'charts': {'wordCloud': word_list}})
+    else:
+        return HttpResponse('method is NotAllowd! x_x!')
+
+
+# 返回pie数据
+

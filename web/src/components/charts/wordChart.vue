@@ -67,9 +67,9 @@ export default {
                   return (
                     "rgb(" +
                     [
-                      Math.round((Math.random() + 0.2) * 160),
-                      Math.round((Math.random() + 0.4) * 160),
-                      Math.round((Math.random() + 0.5) * 160),
+                      Math.round((Math.random() + 0.3) * 160),
+                      Math.round((Math.random() + 0.1) * 160),
+                      Math.round((Math.random() + 0) * 160),
                     ].join(",") +
                     ")"
                   );

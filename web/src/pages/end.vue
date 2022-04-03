@@ -69,29 +69,28 @@
 
             <q-separator/>
 
-            <q-tab-panels v-model="tab" animated class="bg-purple-5 text-left">
+            <q-tab-panels v-model="tab" animated class="bg-info text-left">
               <q-tab-panel name="commen">
                 {{ review_list.load.length }}|{{ review_list.all.length }}
-                <q-list class="text-white shadow-2 rounded-borders bg-purple-3" style=" width: 100%;">
+                <q-list class="text-white shadow-2 rounded-borders bg-secondary " style=" width: 100%;">
                   <q-scroll-area style="height: 400px; width: 100%;">
                     <q-infinite-scroll :offset="250" @load="onLoad_Commen">
                       <div v-for="(item,index) in review_list.load" :key="index">
                         <q-item>
                           <q-item-section avatar>
                             <q-avatar>
-                              {{ index }}
+                              {{ item['score'] }}
                             </q-avatar>
                           </q-item-section>
                           <q-item-section>
-                            {{ item }}
+                            {{ item['item'] }}
                           </q-item-section>
                         </q-item>
                         <q-separator color="orange" inset/>
                       </div>
                       <template v-slot:loading>
                         <div class="row justify-center q-my-md">
-                          <q-spinner-dots v-if="!review_list.flag" color="primary" size="40px"/>
-                          <div v-else class="text-h4">已经到底了！</div>
+                          <q-spinner-dots color="primary" size="40px"/>
                         </div>
                       </template>
                     </q-infinite-scroll>
@@ -104,12 +103,11 @@
                   <q-scroll-area style="height: 400px; width: 100%;">
                     <q-infinite-scroll :offset="250" @load="onLoad_Pic">
                       <div class="row">
-                        <img v-for="(item,index) in pic_list.load" :key="index" :src="item" class="col-6">
+                        <img v-for="(item,index) in pic_list.load" :key="index" :src="item" class="col-6 ">
                       </div>
                       <template v-slot:loading>
                         <div class="row justify-center q-my-md">
-                          <q-spinner-dots v-if="!pic_list.flag" color="primary" size="40px"/>
-                          <div v-else class="text-h4">已经到底了！</div>
+                          <q-spinner-dots color="primary" size="40px"/>
                         </div>
                       </template>
                     </q-infinite-scroll>
@@ -127,9 +125,9 @@
             <word-chart :wordData="charts_data.charts.wordCloud"/>
           </div>
         </div>
-<!--        <q-btn label="getinfo" @click="getinfo"></q-btn>-->
-<!--        <q-btn label="getSentiments2" @click="getSentiments2"></q-btn>-->
-<!--        <q-btn label="getreview" @click="getreview"></q-btn>-->
+        <!--        <q-btn label="getinfo" @click="getinfo"></q-btn>-->
+        <!--        <q-btn label="getWordCloud" @click="getWordCloud"></q-btn>-->
+        <!--        <q-btn label="getreview" @click="getreview"></q-btn>-->
       </div>
     </div>
   </div>
@@ -296,8 +294,8 @@ export default {
     //router是全局路由对象，route= useRoute()是当前路由对
     useRouter();
     let route = useRoute();
-    // const post_data = {type: route.params.type, pid: route.params.pid};
-    const post_data = reactive({type: 'ctrip', pid: '10798720', page: 1});
+    const post_data = {type: route.params.type, pid: route.params.pid};
+    // const post_data = reactive({type: 'ctrip', pid: '14262204'});
 
     const check_flag = route.params.check_flag;
 
@@ -305,21 +303,23 @@ export default {
     const review_list = reactive({
       all: [],
       load: [],
-      flag: false
     })
     const pic_list = reactive({
       all: [],
       load: [],
-      flag: false
     })
 
     const getreview = () => {
       api.post("/getReview/", post_data).then((res) => {
-        console.log(res, 'getreview')
+        console.log(res.data['goodrate'])
         pinfo.ptotalnum = res.data['totalnum'];
         review_list.all = res.data['reviewlist'];
         pic_list.all = res.data['piclist'];
-      });
+        charts_data.charts.pie = res.data['goodrate']
+      }).catch((e) => {
+        console.log(e)
+      })
+
     };
 
     const onLoad_Commen = (index, done) => {
@@ -377,9 +377,9 @@ export default {
         }, //柱状图
       },
     });
-    const getSentiments2 = () => {
-      api.post("/getSentiments2", post_data).then((res) => {
-        charts_data.charts.pie = res.data.charts.pie;
+    const getWordCloud = () => {
+      api.post("/getWordCloud/", post_data).then((res) => {
+        // charts_data.charts.pie = res.data.charts.pie;
         charts_data.charts.wordCloud = res.data.charts.wordCloud;
         charts_data.charts.bar = {
           y: {
@@ -402,22 +402,27 @@ export default {
           ],
           type: ["好评", "差评", "总数"],
         };
+        $q.loading.hide()
       });
     };
 
 
     const tab = ref('commen')
     onMounted(() => {
+
       if (
         check_flag |
         (post_data.type !== undefined) ||
         (post_data.pid !== undefined)
       ) {
+        $q.loading.show({
+          message: '正在渲染数据，请稍后...'
+        })
         getinfo();
-        // getSentiments2()
+        getWordCloud()
         getreview()
       } else {
-        // router.push("/");
+        router.push("/");
       }
     });
 
@@ -429,13 +434,14 @@ export default {
       getinfo,
       pinfo,
       charts_data,
-      getSentiments2,
+      getWordCloud,
       tab,
       onLoad_Commen,
       onLoad_Pic,
       review_list,
       pic_list,
       getreview,
+
     };
   }
   ,

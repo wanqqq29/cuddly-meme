@@ -12,6 +12,7 @@ class Original_Comments(models.Model):
     created_date = models.DateTimeField(verbose_name=u'创建日期', default=datetime.now)
     modified_date = models.DateTimeField(verbose_name=u'修改日期', default=datetime.now)
     productID = models.ForeignKey('Original_Product', verbose_name=u'产品ID', on_delete=models.CASCADE)
+    tokScore = models.CharField(max_length=30,verbose_name=u'分类')
 
     class Meta:
         verbose_name = u'原始评论'
@@ -21,6 +22,7 @@ class Original_Comments(models.Model):
 class Original_Product(models.Model):
     productID = models.CharField(max_length=100, verbose_name=u'产品ID', primary_key=True)
     product_Link = models.CharField(max_length=300, verbose_name=u'产品链接')
+    spyder_date = models.DateTimeField(verbose_name=u'爬取日期',default=datetime.now())
 
     class Meta:
         verbose_name = u'产品信息'
@@ -29,4 +31,5 @@ class Original_Product(models.Model):
 
 class picture(models.Model):
     productID = models.ForeignKey('Original_Product', verbose_name=u'产品ID', on_delete=models.CASCADE)
-    imgLink = models.CharField(max_length=300, verbose_name=u'图片链接', unique=True)
+    imgLink = models.CharField(max_length=300, verbose_name=u'图片链接')
+    hash = models.CharField(max_length=100, verbose_name=u'图片标识', unique=True)

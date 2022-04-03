@@ -40,46 +40,46 @@ def remove_stop_words(text, filepath):
         if index == len(result) - 1:
             break
         result[index:index + 2] = [''.join(result[index:index + 2])]
-    while '太' in result:
-        index = result.index('太')
-        if index == len(result) - 1:
-            break
-        result[index:index + 2] = [''.join(result[index:index + 2])]
-    while '酒店' in result:
-        index = result.index('酒店')
-        if index == len(result) - 1:
-            break
-        result[index:index + 2] = [''.join(result[index:index + 2])]
-    while '房间' in result:
-        index = result.index('房间')
-        if index == len(result) - 1:
-            break
-        result[index:index + 2] = [''.join(result[index:index + 2])]
-    while '住宿' in result:
-        index = result.index('住宿')
-        if index == len(result) - 1:
-            break
-        result[index:index + 2] = [''.join(result[index:index + 2])]
-    while '旅行社' in result:
-        index = result.index('旅行社')
-        if index == len(result) - 1:
-            break
-        result[index:index + 2] = [''.join(result[index:index + 2])]
-    while '导游' in result:
-        index = result.index('导游')
-        if index == len(result) - 1:
-            break
-        result[index:index + 2] = [''.join(result[index:index + 2])]
-    while '吃' in result:
-        index = result.index('吃')
-        if index == len(result) - 1:
-            break
-        result[index:index + 2] = [''.join(result[index:index + 2])]
-    while '没有' in result:
-        index = result.index('没有')
-        if index == len(result) - 1:
-            break
-        result[index:index + 2] = [''.join(result[index:index + 2])]
+    # while '太' in result:
+    #     index = result.index('太')
+    #     if index == len(result) - 1:
+    #         break
+    #     result[index:index + 2] = [''.join(result[index:index + 2])]
+    # while '酒店' in result:
+    #     index = result.index('酒店')
+    #     if index == len(result) - 1:
+    #         break
+    #     result[index:index + 2] = [''.join(result[index:index + 2])]
+    # while '房间' in result:
+    #     index = result.index('房间')
+    #     if index == len(result) - 1:
+    #         break
+    #     result[index:index + 2] = [''.join(result[index:index + 2])]
+    # while '住宿' in result:
+    #     index = result.index('住宿')
+    #     if index == len(result) - 1:
+    #         break
+    #     result[index:index + 2] = [''.join(result[index:index + 2])]
+    # while '旅行社' in result:
+    #     index = result.index('旅行社')
+    #     if index == len(result) - 1:
+    #         break
+    #     result[index:index + 2] = [''.join(result[index:index + 2])]
+    # while '导游' in result:
+    #     index = result.index('导游')
+    #     if index == len(result) - 1:
+    #         break
+    #     result[index:index + 2] = [''.join(result[index:index + 2])]
+    # while '吃' in result:
+    #     index = result.index('吃')
+    #     if index == len(result) - 1:
+    #         break
+    #     result[index:index + 2] = [''.join(result[index:index + 2])]
+    # while '没有' in result:
+    #     index = result.index('没有')
+    #     if index == len(result) - 1:
+    #         break
+    #     result[index:index + 2] = [''.join(result[index:index + 2])]
 
     str = " ".join(result)
 
@@ -123,7 +123,6 @@ def 训练():
     bdt = AdaBoostClassifier(clf, algorithm='SAMME.R', n_estimators=1000, learning_rate=0.46)
     bdt.fit(x_train, y_train)
     predictions = bdt.predict(x_test)
-
     print(metrics.classification_report(y_test, predictions))
     print('准确率:', metrics.accuracy_score(y_test, predictions))
     API_test(vec,bdt,array)
@@ -167,7 +166,7 @@ if __name__ == '__main__':
         '行程安排紧凑，导游热情客气，家庭出游带父母小孩非常合适，能照顾到老人的感受和身体，酒店住的碧桂园，风景不错。张家界和天门山景色优美值得前来游玩',
         '旅行很愉快导游照顾很周到风景很美的一路很顺利导游安排的很妥当过程很快乐也很省事感谢导游的用心安排',
         '导游武阿哥，途中那个男的人很好，服务热情❤️，从接团到散团我们的问题都比较多，因为第一次来湖南吖，想了解的也比较多，问题也是特别多????，大晚上给他打电话还耐心解答，十分感谢你的耐心????✌️。本次出游很满意????????????']
-    训练()
+    # 训练()
     API("槟榔谷，顾名思义，这是一个以槟榔树为主题且以观赏休闲为目的的一个景区，作为一个标准的旅友客观的评价一下槟榔谷这个景区，以下属于个人观点，不喜勿喷： （这是逛槟榔谷的最大意义之一，这属于非物质文化遗产了，实话说，奶奶们真的是在织布，但是这不对外销售，这是自己织布自己使用，当然，高价格也可以协商购买，但是对于我一个无产阶级来说，这个东西对我不实用，现在的工厂的产物对我来说已经足够啦，我对手工的作品也没有什么很大的执念，所以我不明白，一件Gucci的手工毛衣可以卖得辣么贵，辣么贵，心疼我这种无产阶级。） 吃：小吃街，里面有海南算是比较特色的小吃，但是我作为海南本土人，兴趣不大，但内地来的朋友们买了菠萝饭，他们觉得还挺好吃的；我们还吃了菠萝，都知道景点的实物都比较贵，但是这里的菠萝虽然贵，但是很甜；还有一个蜂蜜炒椰子肉，那个真的很贵，但是好好吃，可以试吃，朋友们要买，所以我全程都在吃，请尽情的鄙视我吧，我不介意。 喝：请自行准备喝的水，作为一个不喝饮料（饮料只喝椰子水，觉得好作）的我，携带了两瓶矿泉水，小吃街里面有卖饮料，怕麻烦的可以自行去购买哈！ 住：无（我们没住，所以不知道，不怕远的话住山上的度假酒店区感觉还是不错的，我们是从君澜下来的，还行吧!前天晚上住的，没有在槟榔谷这一带住） 行：其实行这一块才是写这篇攻略的最大亮点，嘿嘿，前面的都是铺垫，铺垫。 现在开始进入主题；当我们驾驶车从“呀诺达”到“槟榔谷”的时候，感觉槟榔谷的停车位很给力耶，剩下多少车位一目了然，感觉停个车都好感动。当我们抵达槟榔谷的时候已经是下午2:30左右了，所以要制定一个完美游览计划，我们在槟榔谷的游玩路线是：门口步行直达演出的地点（大概快快步行的话大概需要18-22分钟左右的样子），因为我们看的是2:50的表演，看完演出出来再出来观光。（取票-看表演-观光-返回海口），这个地方一般不会作为主流旅游景点的，因为开大会所以到这里待了几天。这个博鳌亚洲论坛会场自2001年在琼海博鳌开展第一届会议以来，就已经作为博鳌亚洲论坛永久会址，大门口有万国国旗，里面有各种别墅作为住宿酒店，和会场相隔甚远，需要电瓶车接驳。")
 
-    # API2(rray)
+    API2(array)
