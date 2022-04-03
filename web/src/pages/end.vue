@@ -292,7 +292,7 @@ export default {
     };
 
     //router是全局路由对象，route= useRoute()是当前路由对
-    useRouter();
+    let router = useRouter();
     let route = useRoute();
     const post_data = {type: route.params.type, pid: route.params.pid};
     // const post_data = reactive({type: 'ctrip', pid: '14262204'});
@@ -412,8 +412,8 @@ export default {
 
       if (
         check_flag |
-        (post_data.type !== undefined) ||
-        (post_data.pid !== undefined)
+        (post_data.type != undefined) |
+        (post_data.pid != undefined)
       ) {
         $q.loading.show({
           message: '正在渲染数据，请稍后...'

@@ -62,7 +62,7 @@ def getreview(request):
                 for i in picture.objects.all().filter(productID=pid).values():
                     piclist.append(i['imgLink'])
                 return JsonResponse(
-                    {'totalnum': 11, 'reviewlist': reviewdata, 'piclist': piclist, 'goodrate': goodrate})
+                    {'totalnum': len(reviewlist), 'reviewlist': reviewdata, 'piclist': piclist, 'goodrate': goodrate})
     else:
         return HttpResponse('method is NotAllowd! x_x!')
 
