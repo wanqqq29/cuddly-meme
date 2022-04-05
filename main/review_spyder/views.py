@@ -98,7 +98,6 @@ def WordCloud(request):
         pid = postdata.get('pid')  # 产品id
         if site == 'ctrip':
             if len(pid) != 0:
-                # totalnum = xc.xc_spyder(pid)
                 reviewlist = []
                 for i in Original_Comments.objects.all().filter(productID=pid).values():
                     reviewlist.append(i['comment_content'])
@@ -120,5 +119,32 @@ def WordCloud(request):
         return HttpResponse('method is NotAllowd! x_x!')
 
 
-# 返回pie数据
+# 月份分类
+def bartool(data):
+    list = [0 for i in range(12)]
+    for i in data:
+        list[int(i[5:7]) // 1 - 1] += 1  # 月份除1再-1确定元素位置 从0开始+1
+    return list
 
+
+def bar(request):
+    if request.method == 'POST':
+        postdata = json.loads(request.body)
+        site = postdata.get('type')  # 网站类型：携程|马蜂窝
+        pid = postdata.get('pid')  # 产品id
+        if site == 'ctrip':
+            if len(pid) != 0:
+                data = Original_Comments.objects.all().filter(productID=pid).values()
+                good = []
+                bad = []
+                for i in data:
+                    if i['tokScore'] == '0':
+                        good.append(i['trip_time'])
+                    elif i['tokScore'] == '1':
+                        bad.append(i['trip_time'])
+                gooddata = bartool(good)
+                baddata = bartool(bad)
+                return JsonResponse({'good': gooddata, 'bad': baddata})
+    else:
+        return HttpResponse('method is NotAllowd! x_x!')
+# 返回pie数据

@@ -9,5 +9,6 @@ urlpatterns = [
     path('getReview/', views.getreview),
     path('sentiments1/', views.api1),
     path('getWordCloud/', views.WordCloud),
+    path('getbar/', views.bar),
     path('test/', views.test)
 ]
