@@ -32,7 +32,7 @@ export default defineComponent({
   components: { PieChart, WordChart, BarChart },
 
   setup(props, ctx) {
-    
+
     //router是全局路由对象，route= useRoute()是当前路由对
     let router = useRouter();
     let route = useRoute();
@@ -87,27 +87,6 @@ export default defineComponent({
       api.post("/getSentiments2", post_data).then((res) => {
         charts_data.charts.pie = res.data.charts.pie;
         charts_data.charts.wordCloud = res.data.charts.wordCloud;
-        charts_data.charts.bar = {
-          y: {
-            good: [32, 55, 11, 32, 51, 64, 763, 123, 523, 532, 645, 64],
-            bad: [32, 55, 11, 32, 51, 64, 763, 123, 523, 532, 645, 64],
-          },
-          x: [
-            "1月",
-            "2月",
-            "3月",
-            "4月",
-            "5月",
-            "6月",
-            "7月",
-            "8月",
-            "9月",
-            "10月",
-            "11月",
-            "12月",
-          ],
-          type: ["好评", "差评", "总数"],
-        };
       });
     };
 

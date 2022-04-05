@@ -27,7 +27,7 @@
           <div class="ptitle flex q-mb-md">
             <span>{{ pinfo.pname }}</span>
             <a :href="pinfo.plink" target="_blank">
-              <q-icon color="info" name="open_in_new"
+              <q-icon color="warning" name="open_in_new"
               />
             </a>
           </div>
@@ -63,23 +63,51 @@
               class="bg-secondary text-white"
               narrow-indicator
             >
-              <q-tab label="评论" name="commen"/>
+              <q-tab label="好评" name="Goodcommen"/>
+              <q-tab label="差评" name="Badcommen"/>
               <q-tab label="图片" name="pic"/>
             </q-tabs>
 
             <q-separator/>
 
             <q-tab-panels v-model="tab" animated class="bg-info text-left">
-              <q-tab-panel name="commen">
-                {{ review_list.load.length }}|{{ review_list.all.length }}
+              <q-tab-panel name="Goodcommen">
+                {{ review_list.load.good.length }}|{{ review_list.all.good.length }}
                 <q-list class="text-white shadow-2 rounded-borders bg-secondary " style=" width: 100%;">
                   <q-scroll-area style="height: 400px; width: 100%;">
-                    <q-infinite-scroll :offset="250" @load="onLoad_Commen">
-                      <div v-for="(item,index) in review_list.load" :key="index">
+                    <q-infinite-scroll :offset="250" @load="onLoad_GoodCommen">
+                      <div v-for="(item,index) in review_list.load.good" :key="index">
                         <q-item>
                           <q-item-section avatar>
                             <q-avatar>
-                              {{ item['score'] }}
+                              {{ index + 1 }}
+                            </q-avatar>
+                          </q-item-section>
+                          <q-item-section>
+                            {{ item['item'] }}
+                          </q-item-section>
+                        </q-item>
+                        <q-separator color="orange" inset/>
+                      </div>
+                      <template v-slot:loading>
+                        <div class="row justify-center q-my-md">
+                          <q-spinner-dots color="primary" size="40px"/>
+                        </div>
+                      </template>
+                    </q-infinite-scroll>
+                  </q-scroll-area>
+                </q-list>
+              </q-tab-panel>
+              <q-tab-panel name="Badcommen">
+                {{ review_list.load.bad.length }}|{{ review_list.all.bad.length }}
+                <q-list class="text-white shadow-2 rounded-borders bg-secondary " style=" width: 100%;">
+                  <q-scroll-area style="height: 400px; width: 100%;">
+                    <q-infinite-scroll :offset="250" @load="onLoad_BaddCommen">
+                      <div v-for="(item,index) in review_list.load.bad" :key="index">
+                        <q-item>
+                          <q-item-section avatar>
+                            <q-avatar>
+                              {{ index + 1 }}
                             </q-avatar>
                           </q-item-section>
                           <q-item-section>
@@ -294,15 +322,21 @@ export default {
     //router是全局路由对象，route= useRoute()是当前路由对
     let router = useRouter();
     let route = useRoute();
-    const post_data = {type: route.params.type, pid: route.params.pid};
-    // const post_data = reactive({type: 'ctrip', pid: '14262204'});
+    // const post_data = {type: route.params.type, pid: route.params.pid};
+    const post_data = reactive({type: 'ctrip', pid: '14262204'});
 
     const check_flag = route.params.check_flag;
 
     //请求评论数据
     const review_list = reactive({
-      all: [],
-      load: [],
+      all: {
+        good: [],
+        bad: [],
+      },
+      load: {
+        good: [],
+        bad: [],
+      },
     })
     const pic_list = reactive({
       all: [],
@@ -311,9 +345,16 @@ export default {
 
     const getreview = () => {
       api.post("/getReview/", post_data).then((res) => {
-        console.log(res.data['goodrate'])
+        res.data['reviewlist'].forEach((item) => {
+          if (item['score'] == 0) {
+            review_list.all.good.push(item)
+          } else if (item['score'] == 1) {
+            review_list.all.bad.push(item)
+          }
+        })
+
         pinfo.ptotalnum = res.data['totalnum'];
-        review_list.all = res.data['reviewlist'];
+        // review_list.all = res.data['reviewlist'];
         pic_list.all = res.data['piclist'];
         charts_data.charts.pie = res.data['goodrate']
       }).catch((e) => {
@@ -322,9 +363,16 @@ export default {
 
     };
 
-    const onLoad_Commen = (index, done) => {
-      review_list.all.splice(0, 20).forEach((item) => {
-        review_list.load.push(item)
+    const onLoad_GoodCommen = (index, done) => {
+      review_list.all.good.splice(0, 20).forEach((item) => {
+        review_list.load.good.push(item)
+      })
+      done()
+    }
+
+    const onLoad_BaddCommen = (index, done) => {
+      review_list.all.bad.splice(0, 20).forEach((item) => {
+        review_list.load.bad.push(item)
       })
       done()
     }
@@ -381,10 +429,16 @@ export default {
       api.post("/getWordCloud/", post_data).then((res) => {
         // charts_data.charts.pie = res.data.charts.pie;
         charts_data.charts.wordCloud = res.data.charts.wordCloud;
+        $q.loading.hide()
+      });
+    };
+
+    const getBar = () => {
+      api.post('/getbar/', post_data).then((res) => {
         charts_data.charts.bar = {
           y: {
-            good: [32, 55, 11, 32, 51, 64, 763, 123, 523, 532, 645, 64],
-            bad: [32, 55, 11, 32, 51, 64, 763, 123, 523, 532, 645, 64],
+            good: res.data.good,
+            bad: res.data.bad,
           },
           x: [
             "1月",
@@ -402,12 +456,11 @@ export default {
           ],
           type: ["好评", "差评", "总数"],
         };
-        $q.loading.hide()
-      });
-    };
+      })
+    }
 
 
-    const tab = ref('commen')
+    const tab = ref('Goodcommen')
     onMounted(() => {
 
       if (
@@ -421,8 +474,9 @@ export default {
         getinfo();
         getWordCloud()
         getreview()
+        getBar()
       } else {
-        router.push("/");
+        // router.push("/");
       }
     });
 
@@ -436,12 +490,13 @@ export default {
       charts_data,
       getWordCloud,
       tab,
-      onLoad_Commen,
+      onLoad_GoodCommen,
+      onLoad_BaddCommen,
       onLoad_Pic,
       review_list,
       pic_list,
       getreview,
-
+      getBar,
     };
   }
   ,

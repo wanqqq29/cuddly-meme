@@ -54,7 +54,7 @@ export default {
               top: "55%",
               textStyle: {
                 color: "#FFFFFF",
-                fontSize: 16,
+                fontSize: 20,
                 fontWeight: "100",
               },
             },
@@ -63,7 +63,7 @@ export default {
               x: "center",
               y: "center",
               textStyle: {
-                fontSize: "60",
+                fontSize: "24",
                 color: "#FFFFFF",
                 fontFamily: "DINAlternate-Bold, DINAlternate",
                 foontWeight: "600",
