@@ -5,6 +5,7 @@ from review_spyder.models import Original_Comments, Original_Product, picture
 from lxml import etree
 from review_spyder.sentiments.Bayes.bayes_train import 单条API
 
+
 # TODO:
 #   携程爬虫
 #   获取到了评论跟图片数据 只打印了出来 还没做处理
@@ -30,6 +31,7 @@ def xc_spyder(id):
         img_list = res['img_list']
         print('内容不存在，爬取完毕')
         return res['previewnum']
+
 
 ##携程旅游信息爬虫
 def xc_info_spyder(id):
@@ -126,7 +128,7 @@ def xc_getfistinfo(data, reviewlist, imglist, ptid):
                 pc = picture()
                 pc.productID = ptid  # 产品id
                 pc.imgLink = ii['url']  # 产品链接
-                pc.hash = ii['url'][35:56] #图片hash 去重
+                pc.hash = ii['url'][35:56]  # 图片hash 去重
                 try:
                     pc.save()
                 except:

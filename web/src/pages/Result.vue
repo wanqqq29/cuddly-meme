@@ -26,7 +26,7 @@ import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import WordChart from "../components/charts/WordChart.vue";
 import PieChart from "../components/charts/PieChart.vue";
-import BarChart from "../components/charts/BarChart.vue";
+import BarChart from "components/charts/barChart.vue";
 
 export default defineComponent({
   components: { PieChart, WordChart, BarChart },

@@ -301,7 +301,7 @@ import {useQuasar} from "quasar";
 import Submit from "src/components/submit.vue";
 import WordChart from "../components/charts/WordChart.vue";
 import PieChart from "../components/charts/PieChart.vue";
-import BarChart from "../components/charts/BarChart.vue";
+import barChart from "components/charts/barChart.vue";
 import {api} from "boot/axios";
 import {useRoute, useRouter} from "vue-router";
 
@@ -322,8 +322,8 @@ export default {
     //router是全局路由对象，route= useRoute()是当前路由对
     let router = useRouter();
     let route = useRoute();
-    // const post_data = {type: route.params.type, pid: route.params.pid};
-    const post_data = reactive({type: 'ctrip', pid: '14262204'});
+    const post_data = {type: route.params.type, pid: route.params.pid};
+    // const post_data = reactive({type: 'ctrip', pid: '14262204'});
 
     const check_flag = route.params.check_flag;
 
@@ -476,7 +476,7 @@ export default {
         getreview()
         getBar()
       } else {
-        // router.push("/");
+        router.push("/");
       }
     });
 
@@ -500,6 +500,6 @@ export default {
     };
   }
   ,
-  components: {Submit, PieChart, WordChart, BarChart},
+  components: {Submit, PieChart, WordChart, barChart},
 };
 </script>

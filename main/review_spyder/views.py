@@ -43,7 +43,7 @@ def getreview(request):
         pid = postdata.get('pid')  # 产品id
         if site == 'ctrip':
             if len(pid) != 0:
-                # totalnum = xc.xc_spyder(pid)
+                flag = xc.xc_spyder(pid)
                 data = Original_Comments.objects.all().filter(productID=pid).values()
                 reviewlist = []
                 tokScorelist = []
