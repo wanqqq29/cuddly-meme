@@ -360,7 +360,6 @@ export default {
       }).catch((e) => {
         console.log(e)
       })
-
     };
 
     const onLoad_GoodCommen = (index, done) => {
